@@ -7,18 +7,11 @@ import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useSendTransaction } from "wagmi";
 import { BanknotesIcon, DocumentTextIcon, ShieldCheckIcon, UserGroupIcon } from "@heroicons/react/24/outline";
-import {
-  useScaffoldEventHistory,
-  useScaffoldReadContract,
-  useScaffoldWriteContract,
-  useTargetNetwork,
-} from "~~/hooks/scaffold-eth";
+import { useScaffoldEventHistory, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
-import { getBlockExplorerTxLink } from "~~/utils/scaffold-eth/networks";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
-  const { targetNetwork } = useTargetNetwork();
 
   // ─── Read DAO stats ───
   const { data: treasuryBalance } = useScaffoldReadContract({
@@ -44,11 +37,6 @@ const Home: NextPage = () => {
   const { data: nextClaimId } = useScaffoldReadContract({
     contractName: "ImpactClaim",
     functionName: "nextClaimId",
-  });
-
-  const { data: requiredPasses } = useScaffoldReadContract({
-    contractName: "ImpactClaim",
-    functionName: "requiredPasses",
   });
 
   const { data: tokenBalance } = useScaffoldReadContract({

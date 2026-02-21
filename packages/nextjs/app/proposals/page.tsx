@@ -206,21 +206,8 @@ const ProposalCard = ({ proposalId }: { proposalId: bigint }) => {
 
   if (!proposalData) return null;
 
-  const [
-    id,
-    proposer,
-    pClaimId,
-    recipient,
-    pAmount,
-    description,
-    forVotes,
-    againstVotes,
-    startTime,
-    endTime,
-    graceEnd,
-    executed,
-    canceled,
-  ] = proposalData;
+  const [id, proposer, pClaimId, recipient, pAmount, description, forVotes, againstVotes, , endTime, , , ,] =
+    proposalData;
 
   if (Number(id) === 0) return null;
 
@@ -228,7 +215,6 @@ const ProposalCard = ({ proposalId }: { proposalId: bigint }) => {
   const statusColors = ["badge-warning", "badge-success", "badge-error", "badge-info", "badge-neutral"];
   const statusNum = statusEnum !== undefined ? Number(statusEnum) : 0;
 
-  const now = Math.floor(Date.now() / 1000);
   const isActive = statusNum === 0;
   const canExecute = statusNum === 1;
 

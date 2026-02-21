@@ -290,7 +290,7 @@ const ClaimCard = ({ claimId, isReviewer }: { claimId: bigint; isReviewer: boole
           </div>
         )}
         {hasEvaluated && statusNum === 0 && (
-          <div className="mt-2 badge badge-outline badge-sm">✅ You've already evaluated</div>
+          <div className="mt-2 badge badge-outline badge-sm">✅ You&apos;ve already evaluated</div>
         )}
       </div>
     </div>
