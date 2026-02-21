@@ -110,6 +110,10 @@ export function getBlockExplorerTxLink(chainId: number, txnHash: string) {
   const targetChain = targetChainArr[0] as keyof typeof chains;
   const blockExplorerTxURL = chains[targetChain]?.blockExplorers?.default?.url;
 
+  if (chainId === chains.hardhat.id) {
+    return `/blockexplorer/transaction/${txnHash}`;
+  }
+
   if (!blockExplorerTxURL) {
     return "";
   }
