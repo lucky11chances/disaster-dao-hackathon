@@ -245,7 +245,7 @@ const Home: NextPage = () => {
 
       {/* How It Works */}
       <div className="w-full max-w-5xl bg-base-200 rounded-3xl p-8 mb-10">
-        <h2 className="text-2xl font-bold text-center mb-6">How B-Ready DAO Works</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">How Disaster DAO Works</h2>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <Step num={1} title="Submit Impact" desc="NGO mints an Impact Claim with evidence (receipts, photos, logs)" />
           <Arrow />
