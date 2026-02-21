@@ -1,20 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { NextPage } from "next";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useSendTransaction } from "wagmi";
-import { formatEther, parseEther } from "viem";
-import Link from "next/link";
-import { useScaffoldReadContract, useScaffoldWriteContract, useScaffoldEventHistory, useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { BanknotesIcon, DocumentTextIcon, ShieldCheckIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import {
+  useScaffoldEventHistory,
+  useScaffoldReadContract,
+  useScaffoldWriteContract,
+  useTargetNetwork,
+} from "~~/hooks/scaffold-eth";
 import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 import { getBlockExplorerTxLink } from "~~/utils/scaffold-eth/networks";
-import {
-  ShieldCheckIcon,
-  DocumentTextIcon,
-  UserGroupIcon,
-  BanknotesIcon,
-} from "@heroicons/react/24/outline";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
@@ -159,12 +159,12 @@ const Home: NextPage = () => {
               🪙 BRDY: {parseFloat(myTokens).toLocaleString()} | 🗳️ Voting Power: {votingPowerPct}%
             </div>
             {needsDelegate && (
-              <button
-                className="btn btn-warning btn-sm animate-pulse"
-                onClick={handleDelegate}
-                disabled={isDelegating}
-              >
-                {isDelegating ? <span className="loading loading-spinner loading-xs"></span> : "⚠️ Activate Voting Power (Self-Delegate)"}
+              <button className="btn btn-warning btn-sm animate-pulse" onClick={handleDelegate} disabled={isDelegating}>
+                {isDelegating ? (
+                  <span className="loading loading-spinner loading-xs"></span>
+                ) : (
+                  "⚠️ Activate Voting Power (Self-Delegate)"
+                )}
               </button>
             )}
           </div>
@@ -209,7 +209,10 @@ const Home: NextPage = () => {
             <div className="badge badge-primary mt-2">Create Claim →</div>
           </div>
         </Link>
-        <Link href="/proposals" className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
+        <Link
+          href="/proposals"
+          className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+        >
           <div className="card-body items-center text-center">
             <DocumentTextIcon className="w-12 h-12 text-blue-500 mb-2" />
             <h2 className="card-title">Proposals</h2>
@@ -251,9 +254,17 @@ const Home: NextPage = () => {
           <Arrow />
           <Step num={2} title="Evaluate" desc="Whitelisted reviewers verify the claim on-chain (M-of-N threshold)" />
           <Arrow />
-          <Step num={3} title="Propose Funding" desc="DAO member creates a funding proposal linked to the approved claim" />
+          <Step
+            num={3}
+            title="Propose Funding"
+            desc="DAO member creates a funding proposal linked to the approved claim"
+          />
           <Arrow />
-          <Step num={4} title="Vote & Execute" desc="BRDY holders vote. If passed, treasury funds the recipient automatically" />
+          <Step
+            num={4}
+            title="Vote & Execute"
+            desc="BRDY holders vote. If passed, treasury funds the recipient automatically"
+          />
         </div>
       </div>
 
@@ -277,10 +288,22 @@ const Home: NextPage = () => {
                       </summary>
                       <div className="collapse-content pb-3 text-[11px] opacity-80 space-y-2 break-all">
                         <div className="divider my-0 h-1"></div>
-                        <p><span className="font-semibold text-base-content">Creator:</span><br /> {evt.args.creator}</p>
-                        <p><span className="font-semibold text-base-content">Recipient:</span><br /> {evt.args.recipient}</p>
-                        <p><span className="font-semibold text-base-content">Impact Scope:</span><br /> {evt.args.impactScope}</p>
-                        <p><span className="font-semibold text-base-content">Evidence URI:</span><br /> {evt.args.tokenURI}</p>
+                        <p>
+                          <span className="font-semibold text-base-content">Creator:</span>
+                          <br /> {evt.args.creator}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Recipient:</span>
+                          <br /> {evt.args.recipient}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Impact Scope:</span>
+                          <br /> {evt.args.impactScope}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Evidence URI:</span>
+                          <br /> {evt.args.tokenURI}
+                        </p>
                       </div>
                     </details>
                   );
@@ -301,14 +324,28 @@ const Home: NextPage = () => {
                     <details key={idx} className="collapse collapse-arrow bg-base-200 mb-2 border border-base-300">
                       <summary className="collapse-title p-3 min-h-0 text-sm font-semibold flex justify-between items-center cursor-pointer">
                         <span>Proposal #{evt.args.proposalId?.toString()}</span>
-                        <span className="opacity-70 font-normal text-[11px]">{formatEther(evt.args.amount || 0n)} ETH</span>
+                        <span className="opacity-70 font-normal text-[11px]">
+                          {formatEther(evt.args.amount || 0n)} ETH
+                        </span>
                       </summary>
                       <div className="collapse-content pb-3 text-[11px] opacity-80 space-y-2 break-all">
                         <div className="divider my-0 h-1"></div>
-                        <p><span className="font-semibold text-base-content">Claim ID:</span> #{evt.args.claimId?.toString()}</p>
-                        <p><span className="font-semibold text-base-content">Proposer:</span><br /> {evt.args.proposer}</p>
-                        <p><span className="font-semibold text-base-content">Description:</span><br /> {evt.args.description}</p>
-                        <p><span className="font-semibold text-base-content">Amount:</span> {formatEther(evt.args.amount || 0n)} ETH</p>
+                        <p>
+                          <span className="font-semibold text-base-content">Claim ID:</span> #
+                          {evt.args.claimId?.toString()}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Proposer:</span>
+                          <br /> {evt.args.proposer}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Description:</span>
+                          <br /> {evt.args.description}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Amount:</span>{" "}
+                          {formatEther(evt.args.amount || 0n)} ETH
+                        </p>
                       </div>
                     </details>
                   );
@@ -329,12 +366,20 @@ const Home: NextPage = () => {
                     <details key={idx} className="collapse collapse-arrow bg-base-200 mb-2 border border-base-300">
                       <summary className="collapse-title p-3 min-h-0 text-sm font-semibold flex justify-between items-center cursor-pointer">
                         <span className="text-success">Funded #{evt.args.proposalId?.toString()}</span>
-                        <span className="opacity-70 font-normal text-[11px] text-success">{formatEther(evt.args.amount || 0n)} ETH</span>
+                        <span className="opacity-70 font-normal text-[11px] text-success">
+                          {formatEther(evt.args.amount || 0n)} ETH
+                        </span>
                       </summary>
                       <div className="collapse-content pb-3 text-[11px] opacity-80 space-y-2 break-all">
                         <div className="divider my-0 h-1"></div>
-                        <p><span className="font-semibold text-base-content">Paid To:</span><br /> {evt.args.recipient}</p>
-                        <p><span className="font-semibold text-base-content">Amount:</span> {formatEther(evt.args.amount || 0n)} ETH</p>
+                        <p>
+                          <span className="font-semibold text-base-content">Paid To:</span>
+                          <br /> {evt.args.recipient}
+                        </p>
+                        <p>
+                          <span className="font-semibold text-base-content">Amount:</span>{" "}
+                          {formatEther(evt.args.amount || 0n)} ETH
+                        </p>
                       </div>
                     </details>
                   );
@@ -383,8 +428,6 @@ const Step = ({ num, title, desc }: { num: number; title: string; desc: string }
   </div>
 );
 
-const Arrow = () => (
-  <div className="hidden md:flex items-center text-2xl opacity-30">→</div>
-);
+const Arrow = () => <div className="hidden md:flex items-center text-2xl opacity-30">→</div>;
 
 export default Home;

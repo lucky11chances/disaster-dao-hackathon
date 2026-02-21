@@ -5,11 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { hardhat } from "viem/chains";
-import { Bars3Icon, BugAntIcon, ShieldCheckIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, DocumentTextIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
-
-
 
 type HeaderMenuLink = {
   label: string;
@@ -19,24 +17,24 @@ type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: 'Dashboard',
-    href: '/'
+    label: "Dashboard",
+    href: "/",
   },
   {
-    label: 'Claims',
-    href: '/claims',
-    icon: <ShieldCheckIcon className="h-4 w-4" />
+    label: "Claims",
+    href: "/claims",
+    icon: <ShieldCheckIcon className="h-4 w-4" />,
   },
   {
-    label: 'Proposals',
-    href: '/proposals',
-    icon: <DocumentTextIcon className="h-4 w-4" />
+    label: "Proposals",
+    href: "/proposals",
+    icon: <DocumentTextIcon className="h-4 w-4" />,
   },
   {
-    label: 'Debug',
-    href: '/debug',
-    icon: <BugAntIcon className="h-4 w-4" />
-  }
+    label: "Debug",
+    href: "/debug",
+    icon: <BugAntIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {
@@ -51,8 +49,9 @@ export const HeaderMenuLinks = () => {
             <Link
               href={href}
               passHref
-              className={`${isActive ? "bg-secondary shadow-md" : ""
-                } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              className={`${
+                isActive ? "bg-secondary shadow-md" : ""
+              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
